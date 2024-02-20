@@ -4,7 +4,8 @@ let news = [];
 const getLatestNews = async () => {
   // const url = new URL(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`);
   // const url = new URL(`https://lovely-hummingbird-ed40c1.netlify.app/top-headlines?category=science`);
-  const url = new URL(`http://times-node-env.eba-appvq3ef.ap-northeast-2.elasticbeanstalk.com/top-headlines`);
+  // const url = new URL(`http://times-node-env.eba-appvq3ef.ap-northeast-2.elasticbeanstalk.com/top-headlines`);
+  let url = new URL(`https://lovely-hummingbird-ed40c1.netlify.app/top-headlines?country=kr&apiKey=${API_KEY}`);
 
   console.log('uuu', url);
 
