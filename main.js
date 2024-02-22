@@ -23,7 +23,10 @@ const getLatestNews = async () => {
 const getNewsByCategory = async (event) => {
   const category = event.target.textContent.toLowerCase();
   console.log('category', category);
-  const url = new URL(`https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=${API_KEY}`);
+  // const url = new URL(`https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=${API_KEY}`);
+  let url = new URL(
+    `https://lovely-hummingbird-ed40c1.netlify.app/top-headlines?country=kr&category=${category}&apiKey=${API_KEY}`
+  );
 
   const response = await fetch(url);
   const data = await response.json();
@@ -86,7 +89,10 @@ const openSearchBox = () => {
 const getNewsByKeyword = async () => {
   const keyword = document.getElementById('search-input').value;
   console.log('keyword', keyword);
-  const url = new URL(`https://newsapi.org/v2/top-headlines?country=us&q=${keyword}&apiKey=${API_KEY}`);
+  // const url = new URL(`https://newsapi.org/v2/top-headlines?country=us&q=${keyword}&apiKey=${API_KEY}`);
+  let url = new URL(
+    `https://lovely-hummingbird-ed40c1.netlify.app/top-headlines?country=kr&q=${keyword}&apiKey=${API_KEY}`
+  );
 
   const response = await fetch(url);
   const data = await response.json();
