@@ -20,8 +20,17 @@ const getLatestNews = async () => {
   console.log('rrr', response);
 };
 
-const getNewsByCategory = (event) => {
-  console.log('catagory');
+const getNewsByCategory = async (event) => {
+  const category = event.target.textContent.toLowerCase();
+  console.log('category', category);
+  const url = new URL(`https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=${API_KEY}`);
+
+  const response = await fetch(url);
+  const data = await response.json();
+  console.log('ddd', data);
+
+  newsList = data.articles;
+  render();
 };
 
 const render = () => {
@@ -37,7 +46,7 @@ const render = () => {
   </div>
   <div class="col-lg-8">
     <h2>${news.title}</h2>
-    <p>${news.description}</p>
+    <p class="news-text">${news.description}</p>
     <div>${news.source.name} * ${news.publishedAt}</div>
   </div>
 </div>`

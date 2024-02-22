@@ -30,10 +30,19 @@
 .news-img-size {
   max-width: 100;
   max-height: 250px;
+  object-fit: cover;
 }
 
 .news {
   border-bottom: 2px solid black;
+}
+
+.news-text {
+  width: 100%;
+  padding: 0 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* white-space: nowrap; */
 }
 
 /* 사이드 메뉴 바 */
