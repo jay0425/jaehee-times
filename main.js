@@ -82,3 +82,16 @@ const openSearchBox = () => {
     inputArea.style.display = 'inline';
   }
 };
+
+const getNewsByKeyword = async () => {
+  const keyword = document.getElementById('search-input').value;
+  console.log('keyword', keyword);
+  const url = new URL(`https://newsapi.org/v2/top-headlines?country=us&q=${keyword}&apiKey=${API_KEY}`);
+
+  const response = await fetch(url);
+  const data = await response.json();
+  console.log('data', data);
+
+  newsList = data.articles;
+  render();
+};
