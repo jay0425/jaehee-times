@@ -2,38 +2,45 @@ const API_KEY = `b3bcbacde44c40eaaf12b35006d52252`;
 let newsList = [];
 const menus = document.querySelectorAll('.menus button');
 menus.forEach((menu) => menu.addEventListener('click', (event) => getNewsByCategory(event)));
+// let url = new URL(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`);
+// const url = new URL(`https://lovely-hummingbird-ed40c1.netlify.app/top-headlines?category=science`);
+// const url = new URL(`http://times-node-env.eba-appvq3ef.ap-northeast-2.elasticbeanstalk.com/top-headlines`);
+let url = new URL(`https://lovely-hummingbird-ed40c1.netlify.app/top-headlines?country=kr&apiKey=${API_KEY}`);
+
+const getNews = async (url) => {
+  try {
+    const response = await fetch(url); // 데이터를 가져오는 함수. fetch // await 서버와 통신 관련된 것은 기다려 줘야 한다.
+    const data = await response.json(); // json -> 텍스트 타입인 데이터인데 객체처럼 생긴 것.
+
+    if (response.status === 200) {
+      if (data.articles.length === 0) {
+        // 뉴스가 아무것도 없다면
+        throw new Error('No result for this search');
+      }
+      newsList = data.articles;
+      render();
+    } else {
+      throw new Error(data.message);
+    }
+  } catch (error) {
+    console.log('error', error.message);
+    errorRender(error.message);
+  }
+};
 
 const getLatestNews = async () => {
-  // const url = new URL(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`);
-  // const url = new URL(`https://lovely-hummingbird-ed40c1.netlify.app/top-headlines?category=science`);
-  // const url = new URL(`http://times-node-env.eba-appvq3ef.ap-northeast-2.elasticbeanstalk.com/top-headlines`);
-  let url = new URL(`https://lovely-hummingbird-ed40c1.netlify.app/top-headlines?country=kr&apiKey=${API_KEY}`);
-
-  console.log('uuu', url);
-
-  const response = await fetch(url); // 데이터를 가져오는 함수. fetch // await 서버와 통신 관련된 것은 기다려 줘야 한다.
-  const data = await response.json(); // json -> 텍스트 타입인 데이터인데 객체처럼 생긴 것.
-  newsList = data.articles;
-  render();
-  console.log('ddd', newsList);
-
-  console.log('rrr', response);
+  getNews(url);
 };
 
 const getNewsByCategory = async (event) => {
   const category = event.target.textContent.toLowerCase();
   console.log('category', category);
-  // const url = new URL(`https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=${API_KEY}`);
-  let url = new URL(
+  // url = new URL(`https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=${API_KEY}`);
+  url = new URL(
     `https://lovely-hummingbird-ed40c1.netlify.app/top-headlines?country=kr&category=${category}&apiKey=${API_KEY}`
   );
 
-  const response = await fetch(url);
-  const data = await response.json();
-  console.log('ddd', data);
-
-  newsList = data.articles;
-  render();
+  getNews(url);
 };
 
 const render = () => {
@@ -61,9 +68,32 @@ const render = () => {
 
 getLatestNews();
 
+const errorRender = (errorMessage) => {
+  const errorHTML = `
+    <div class="alert alert-danger" role="alert">
+      ${errorMessage}
+    </div>
+  `;
+
+  document.getElementById('news-board').innerHTML = errorHTML;
+};
+
 // 1. 버튼들에 클릭 이벤트를 준다.
 // 2. 카테고리 별 뉴스를 가져온다.
 // 3. 가져온 뉴스를 보여준다.
+
+// 검색
+
+const getNewsByKeyword = async () => {
+  const keyword = document.getElementById('search-input').value;
+  console.log('keyword', keyword);
+  // url = new URL(`https://newsapi.org/v2/top-headlines?country=us&q=${keyword}&apiKey=${API_KEY}`);
+  url = new URL(
+    `https://lovely-hummingbird-ed40c1.netlify.app/top-headlines?country=kr&q=${keyword}&apiKey=${API_KEY}`
+  );
+
+  getNews(url);
+};
 
 // 사이드 바
 
@@ -84,20 +114,4 @@ const openSearchBox = () => {
   } else {
     inputArea.style.display = 'inline';
   }
-};
-
-const getNewsByKeyword = async () => {
-  const keyword = document.getElementById('search-input').value;
-  console.log('keyword', keyword);
-  // const url = new URL(`https://newsapi.org/v2/top-headlines?country=us&q=${keyword}&apiKey=${API_KEY}`);
-  let url = new URL(
-    `https://lovely-hummingbird-ed40c1.netlify.app/top-headlines?country=kr&q=${keyword}&apiKey=${API_KEY}`
-  );
-
-  const response = await fetch(url);
-  const data = await response.json();
-  console.log('data', data);
-
-  newsList = data.articles;
-  render();
 };
