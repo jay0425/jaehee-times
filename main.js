@@ -9,10 +9,10 @@ let page = 1;
 const pageSize = 10;
 const groupSize = 5;
 
-let url = new URL(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`);
+// let url = new URL(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`);
 // const url = new URL(`https://lovely-hummingbird-ed40c1.netlify.app/top-headlines?category=science`);
 // const url = new URL(`http://times-node-env.eba-appvq3ef.ap-northeast-2.elasticbeanstalk.com/top-headlines`);
-// let url = new URL(`https://lovely-hummingbird-ed40c1.netlify.app/top-headlines?country=kr&apiKey=${API_KEY}`);
+let url = new URL(`https://lovely-hummingbird-ed40c1.netlify.app/top-headlines?country=kr&apiKey=${API_KEY}`);
 
 const getNews = async () => {
   try {
@@ -52,10 +52,10 @@ const getLatestNews = async () => {
 const getNewsByCategory = async (event) => {
   const category = event.target.textContent.toLowerCase();
   console.log('category', category);
-  url = new URL(`https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=${API_KEY}`);
-  // url = new URL(
-  //   `https://lovely-hummingbird-ed40c1.netlify.app/top-headlines?country=kr&category=${category}&apiKey=${API_KEY}`
-  // );
+  // url = new URL(`https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=${API_KEY}`);
+  url = new URL(
+    `https://lovely-hummingbird-ed40c1.netlify.app/top-headlines?country=kr&category=${category}&apiKey=${API_KEY}`
+  );
 
   getNews(url);
 };
@@ -179,10 +179,10 @@ const errorRender = (errorMessage) => {
 const getNewsByKeyword = async () => {
   const keyword = document.getElementById('search-input').value;
   console.log('keyword', keyword);
-  url = new URL(`https://newsapi.org/v2/top-headlines?country=us&q=${keyword}&apiKey=${API_KEY}`);
-  // url = new URL(
-  //   `https://lovely-hummingbird-ed40c1.netlify.app/top-headlines?country=kr&q=${keyword}&apiKey=${API_KEY}`
-  // );
+  // url = new URL(`https://newsapi.org/v2/top-headlines?country=us&q=${keyword}&apiKey=${API_KEY}`);
+  url = new URL(
+    `https://lovely-hummingbird-ed40c1.netlify.app/top-headlines?country=kr&q=${keyword}&apiKey=${API_KEY}`
+  );
 
   getNews(url);
 };
